@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
 
@@ -25,9 +26,10 @@ namespace System.Metrics
         {
             public List<string> Metrics { get; set; } = new List<string>();
 
-            public void Handle(string metricRecord)
+            public async Task Handle(string metricRecord)
             {
                 Metrics.Add(metricRecord);
+                await Task.Delay(1000);
             }
         }
     }

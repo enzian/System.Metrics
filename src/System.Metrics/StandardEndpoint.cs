@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace System.Metrics
 {
@@ -29,11 +31,7 @@ namespace System.Metrics
         public void Record<TMetric>(string metric, int value) where TMetric : IAllowsInteger
         {
             var command = string.Format("{0}:{1}|{2}", metric, value, units[typeof(TMetric)]);
-            
-            foreach (var sink in MetricsSinks)
-            {
-                sink.Handle(command);
-            }
+            SendCommand(command);
         }
 
         public void Record<TMetric>(string metric, double value, double sampleRate) where TMetric : IAllowsDouble, IAllowsSampleRate
@@ -49,6 +47,11 @@ namespace System.Metrics
         public void AddSink(IMetricsSink sink)
         {
             MetricsSinks.Add(sink);
+        }
+
+        private void SendCommand(string command){            
+            var tasks = MetricsSinks.Select(x => x.Handle(command));
+            Task.WhenAll(tasks).Wait();
         }
     }
 }

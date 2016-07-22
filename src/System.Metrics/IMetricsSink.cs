@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace System.Metrics
 {
     public interface IMetricsSink
     {
-        void Handle(string metricRecord);
+        Task Handle(string metricRecord);
     }
 }
