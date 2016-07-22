@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0-alpha",
+  "buildOptions": {
+    "debugType": "portable",
+    "emitEntryPoint": false
+  },
+  "dependencies": {
+    "NETStandard.Library": "1.6.0"
+  },
+  "frameworks": {
+    "netstandard1.6": {
+      "dependencies": {
+        "NETStandard.Library": {
+          "type": "platform",
+          "version": "1.6.0"
+        }
+      },
+      "imports": [
+        "dnxcore50"
+      ] 
+    }
+  }
+}
