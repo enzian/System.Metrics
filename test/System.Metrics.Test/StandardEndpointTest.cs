@@ -19,6 +19,7 @@ namespace System.Metrics
             subject.Record<Counting>("metric.test.total", 1);
 
             // Assert
+            fakeSink.Metrics.Should().NotBeEmpty("No commands were sent, expected one!");
             fakeSink.Metrics.Should().Contain("metric.test.total:1|c");
         }
 
@@ -34,7 +35,45 @@ namespace System.Metrics
             subject.Record<Counting>("metric.test.total", 1, 0.1);
 
             // Assert
+            fakeSink.Metrics.Should().NotBeEmpty("No commands were sent, expected one!");
             fakeSink.Metrics.Should().Contain("metric.test.total:1|c|@0.1");
+        }
+
+        [Fact]
+        public void TestGauge_Floating()
+        {
+            // Arrange
+            var subject = new StandardEndpoint();
+            var fakeSink = new FakeSink();
+            subject.AddSink(fakeSink);
+
+            // Act
+            subject.Record<Gauge>("metric.test.load", 1.1);
+
+            // Assert
+            fakeSink.Metrics.Should().NotBeEmpty("No commands were sent, expected one!");
+            fakeSink.Metrics.Should().Contain("metric.test.load:1.1|g");
+        }
+
+        [Theory]
+        [InlineData(1.1, "+1.1")]
+        [InlineData(-1.1, "-1.1")]
+        [InlineData(0, "+0")]
+        [InlineData(12345.123456789, "+12345.123456789")]
+        [InlineData(-12345.123456789, "-12345.123456789")]
+        public void TestGauge_WithNegativeDelta(double value, string expected)
+        {
+            // Arrange
+            var subject = new StandardEndpoint();
+            var fakeSink = new FakeSink();
+            subject.AddSink(fakeSink);
+
+            // Act
+            subject.Record<Gauge>("metric.test.load", value, true);
+            
+            // Assert
+            fakeSink.Metrics.Should().NotBeEmpty("No commands were sent, expected one!");
+            fakeSink.Metrics.Should().Contain(x => x.Contains($":{expected}|"));
         }
 
         internal class FakeSink : IMetricsSink

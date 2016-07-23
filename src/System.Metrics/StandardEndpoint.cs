@@ -25,7 +25,14 @@ namespace System.Metrics
 
         public void Record<TMetric>(string metric, double value) where TMetric : IAllowsDouble
         {
-            throw new NotImplementedException();
+            var command = CompileCommand(metric, value.ToString(CultureInfo.InvariantCulture), units[typeof(TMetric)]);
+            SendCommand(command);
+        }
+
+        public void Record<TMetric>(string metric, double value, bool isDelta) where TMetric : IAllowsDouble, IAllowsDelta
+        {
+            var command = CompileCommand(metric, value >= 0 ? "+" + value.ToString() : value.ToString(), units[typeof(TMetric)]);
+            SendCommand(command);
         }
 
         public void Record<TMetric>(string metric, string value) where TMetric : IAllowsString
@@ -35,7 +42,7 @@ namespace System.Metrics
 
         public void Record<TMetric>(string metric, int value) where TMetric : IAllowsInteger
         {
-            var command = CompileCommand(metric, value.ToString(CultureInfo.InvariantCulture), units[typeof(TMetric)], null);
+            var command = CompileCommand(metric, value.ToString(CultureInfo.InvariantCulture), units[typeof(TMetric)]);
             SendCommand(command);
         }
 
