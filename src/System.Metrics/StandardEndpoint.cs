@@ -11,7 +11,7 @@ namespace System.Metrics
 
         private readonly string Format = "{0}:{1}|{2}";
 
-        private readonly string Format_WithSampleRate = "{0}:{1}|{2}|{3}";
+        private readonly string Format_WithSampleRate = "{0}:{1}|{2}|@{3}";
 
         internal readonly Dictionary<Type, string> units = new Dictionary<Type, string>
                                                                        {

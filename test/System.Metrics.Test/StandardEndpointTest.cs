@@ -19,7 +19,7 @@ namespace System.Metrics
             subject.Record<Counting>("metric.test.total", 1);
 
             // Assert
-            fakeSink.Metrics.Should().ContainSingle("metric.test.total:1|c");
+            fakeSink.Metrics.Should().Contain("metric.test.total:1|c");
         }
 
         [Fact]
@@ -34,7 +34,7 @@ namespace System.Metrics
             subject.Record<Counting>("metric.test.total", 1, 0.1);
 
             // Assert
-            fakeSink.Metrics.Should().ContainSingle("metric.test.total:1|c|0.1");
+            fakeSink.Metrics.Should().Contain("metric.test.total:1|c|@0.1");
         }
 
         internal class FakeSink : IMetricsSink
