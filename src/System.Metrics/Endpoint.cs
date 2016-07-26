@@ -11,5 +11,7 @@ namespace System.Metrics
         void Record<TMetric>(string metric, double value, double sampleRate) where TMetric : IAllowsDouble, IAllowsSampleRate;
 
         void Record<TMetric>(string metric, string value) where TMetric : IAllowsString;
+
+        void AddBackend(IMetricsSink sink);
     }
 }

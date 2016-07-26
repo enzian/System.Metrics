@@ -76,5 +76,10 @@ namespace System.Metrics
             var tasks = MetricsSinks.Select(x => x.Handle(command));
             Task.WhenAll(tasks).Wait();
         }
+
+        public void AddBackend(IMetricsSink sink)
+        {
+            this.MetricsSinks.Add(sink);
+        }
     }
 }
