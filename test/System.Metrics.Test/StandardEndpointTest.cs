@@ -61,7 +61,27 @@ namespace System.Metrics
         [InlineData(0, "+0")]
         [InlineData(12345.123456789, "+12345.123456789")]
         [InlineData(-12345.123456789, "-12345.123456789")]
-        public void TestGauge_WithNegativeDelta(double value, string expected)
+        public void TestGauge_WithDeltas_Decimal(double value, string expected)
+        {
+            // Arrange
+            var subject = new StandardEndpoint();
+            var fakeSink = new FakeSink();
+            subject.AddSink(fakeSink);
+
+            // Act
+            subject.Record<Gauge>("metric.test.load", value, true);
+            
+            // Assert
+            fakeSink.Metrics.Should().NotBeEmpty("No commands were sent, expected one!");
+            fakeSink.Metrics.Should().Contain(x => x.Contains($":{expected}|"));
+        }
+
+        
+        [Theory]
+        [InlineData(1, "+1")]
+        [InlineData(-1, "-1")]
+        [InlineData(0, "+0")]
+        public void TestGauge_WithDelta_Integral(int value, string expected)
         {
             // Arrange
             var subject = new StandardEndpoint();

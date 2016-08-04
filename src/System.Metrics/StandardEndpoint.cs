@@ -45,6 +45,20 @@ namespace System.Metrics
             var command = CompileCommand(metric, value.ToString(CultureInfo.InvariantCulture), units[typeof(TMetric)]);
             SendCommand(command);
         }
+        
+        public void Record<TMetric>(string metric, int value, bool isDelta = false) where TMetric : IAllowsInteger, IAllowsDelta
+        {
+            var number = value.ToString(CultureInfo.InvariantCulture);
+
+            if(isDelta)
+            {
+                number = value >= 0 ? "+" + number : number;
+            }
+            
+            var command = CompileCommand(metric, number, units[typeof(TMetric)]);
+
+            SendCommand(command);
+        }
 
         public void Record<TMetric>(string metric, double value, double sampleRate) where TMetric : IAllowsDouble, IAllowsSampleRate
         {

@@ -9,7 +9,7 @@ namespace System.Metrics
 
     public class Counting : IAllowsSampleRate, IAllowsInteger { }
     public class Timing : IAllowsSampleRate, IAllowsInteger { }
-    public class Gauge : IAllowsDouble, IAllowsDelta { }
+    public class Gauge : IAllowsDouble, IAllowsInteger, IAllowsDelta { }
     public class Histogram : IAllowsInteger { }
     public class Meter : IAllowsInteger { }
     public class Set : IAllowsString { }
