@@ -1,20 +1,5 @@
 {
-  "version": "1.0.0-alpha",
-  "id": "System.Metrics",
-  "packOptions": {
-    "authors": ["Michael (Enzian) Ingold"],
-    "owners": ["Michael (Enzian) Ingold"],
-    "description": "A standard interface for metrics in .net applications.",
-    "licenseUrl": "https://github.com/enzian/System.Metrics/blob/master/LICENSE.txt",
-    "repository": {
-      "url": "https://github.com/enzian/System.Metrics",
-      "type": "git"
-    },
-    "tags": [
-      "metrics",
-      "system"
-    ]
-  },
+  "version": "1.0.0-alpha1",
   "buildOptions": {
     "debugType": "portable",
     "emitEntryPoint": false

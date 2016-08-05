@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata minClientVersion="2.12">
+    <id>System.Metrics</id>
+    <version>1.0.0-alpha1</version>
+    <title>System.Metrics</title>
+    <authors>Michael (Enzian) Ingold</authors>
+    <summary>A standard interface for metrics in .net applications.</summary>
+    <description>A standard interface for metrics in .net applications.</description>
+    <language>en-US</language>
+    <projectUrl>https://github.com/enzian/System.Metrics</projectUrl>
+    <licenseUrl>https://raw.githubusercontent.com/enzian/System.Metrics/master/LICENSE.txt</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <dependencies>
+      <group targetFramework=".NETStandard1.0">
+        <dependency id="NETStandard.Library" version="[1.6.0, )" />
+      </group>
+    </dependencies>
+    <tags>system metrics</tags>
+  </metadata>
+  <files>
+    <file src="bin\Release\netstandard1.0\System.Metrics.*" target="lib\netstandard1.0\" />
+  </files>
+</package>
