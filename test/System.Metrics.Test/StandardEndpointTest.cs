@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using FluentAssertions;
 using Xunit;
 
@@ -94,18 +92,6 @@ namespace System.Metrics
             // Assert
             fakeSink.Metrics.Should().NotBeEmpty("No commands were sent, expected one!");
             fakeSink.Metrics.Should().Contain(x => x.Contains($":{expected}|"));
-        }
-
-        internal class FakeSink : IMetricsSink
-        {
-            public List<string> Metrics { get; set; } = new List<string>();
-
-            public async Task Handle(string metricRecord)
-            {
-                Metrics.Add(metricRecord);
-                // Adda delay to provoke timing issued if synchronization should be broken
-                await Task.Delay(10);
-            }
-        }
+        }        
     }
 }

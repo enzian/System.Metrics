@@ -5,13 +5,15 @@ using System.Threading.Tasks;
 
 namespace System.Metrics
 {
-    public class StandardEndpoint : Endpoint
+    public class StandardEndpoint : Endpoint, IPrefixedEndpoint
     {
         internal List<IMetricsSink> MetricsSinks { get; set; } = new List<IMetricsSink>();
 
         private readonly string Format = "{0}:{1}|{2}";
 
         private readonly string Format_WithSampleRate = "{0}:{1}|{2}|@{3}";
+
+        private string _Prefix = string.Empty;
 
         internal readonly Dictionary<Type, string> units = new Dictionary<Type, string>
                                                                        {
@@ -22,6 +24,18 @@ namespace System.Metrics
                                                                            {typeof(Meter), "m"},
                                                                            {typeof(Set), "s"}
                                                                        };
+        
+        public string Prefix
+        {
+            get
+            {
+                return _Prefix;
+            }
+            set
+            {
+                _Prefix = value.Trim('.');
+            }
+        }
 
         public void Record<TMetric>(string metric, double value) where TMetric : IAllowsDouble
         {
@@ -77,13 +91,16 @@ namespace System.Metrics
         }
 
         private string CompileCommand(string metric, string value, string type, double? sampleRate = null)
-        {            
+        {
+            // Concatenate prefix and metric name
+            var prefixedMetric = _Prefix != string.Empty ? string.Format("{0}.{1}", _Prefix, metric) : metric;
+
             if(sampleRate != null)
             {
-                return string.Format(CultureInfo.InvariantCulture, Format_WithSampleRate, metric, value, type, sampleRate);
+                return string.Format(CultureInfo.InvariantCulture, Format_WithSampleRate, prefixedMetric, value, type, sampleRate);
             }
 
-            return string.Format(CultureInfo.InvariantCulture, Format, metric, value, type);
+            return string.Format(CultureInfo.InvariantCulture, Format, prefixedMetric, value, type);
         }
 
         private void SendCommand(string command){            
