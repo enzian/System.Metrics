@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace System.Metrics
 {
-    public class StandardEndpoint : Endpoint, IPrefixedEndpoint
+    public class StandardEndpoint : IMetricsEndpoint, IPrefixedEndpoint
     {
         internal List<IMetricsSink> MetricsSinks { get; set; } = new List<IMetricsSink>();
 

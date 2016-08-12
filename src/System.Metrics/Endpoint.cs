@@ -1,6 +1,6 @@
 namespace System.Metrics
 {
-    public interface Endpoint
+    public interface IMetricsEndpoint : IPrefixedEndpoint
     {
         void Record<TMetric>(string metric, int value) where TMetric : IAllowsInteger;
 
