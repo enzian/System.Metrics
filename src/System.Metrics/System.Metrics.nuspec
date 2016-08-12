@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata minClientVersion="2.12">
     <id>System.Metrics</id>
-    <version>1.0.0-alpha1</version>
+    <version>1.0.0-alpha2</version>
     <title>System.Metrics</title>
     <authors>Michael (Enzian) Ingold</authors>
     <summary>A standard interface for metrics in .net applications.</summary>
